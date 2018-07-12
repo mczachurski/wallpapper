@@ -12,7 +12,7 @@ import AVFoundation
 
 class Generator {
 
-    let picureInfos: [PictureInfo]
+    var picureInfos: [PictureInfo]
     let outputFileName: String
     let options = [kCGImageDestinationLossyCompressionQuality: 1.0]
 
@@ -28,6 +28,10 @@ class Generator {
 
             if let currentDirectoryURL = URL(string: "file://\(currentDirectory)"),
                 let destination = CGImageDestinationCreateWithData(destinationData, AVFileType.heic as CFString, 16, nil) {
+
+                self.picureInfos.sort { (left, right) -> Bool in
+                    return left.isPrimary == true
+                }
 
                 for (index, pictureInfo) in self.picureInfos.enumerated() {
                     let fileURL = currentDirectoryURL.appendingPathComponent(pictureInfo.fileName)

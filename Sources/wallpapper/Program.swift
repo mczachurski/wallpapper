@@ -94,10 +94,7 @@ class Program {
     }
 
     func printVersion() {
-        let version = Bundle.main.infoDictionary!["CFBundleShortVersionString"]!
-        let build = Bundle.main.infoDictionary!["CFBundleVersion"]!
-
-        self.consoleIO.writeMessage("\(version) (\(build)")
+        self.consoleIO.writeMessage("1.0.0")
     }
 
     func printUsage() {
