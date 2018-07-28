@@ -27,7 +27,7 @@ class Generator {
             let currentDirectory = FileManager.default.currentDirectoryPath
 
             if let currentDirectoryURL = URL(string: "file://\(currentDirectory)"),
-                let destination = CGImageDestinationCreateWithData(destinationData, AVFileType.heic as CFString, 16, nil) {
+                let destination = CGImageDestinationCreateWithData(destinationData, AVFileType.heic as CFString, self.picureInfos.count, nil) {
 
                 self.picureInfos.sort { (left, right) -> Bool in
                     return left.isPrimary == true
