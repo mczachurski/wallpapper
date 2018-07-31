@@ -18,6 +18,8 @@ swift build --configuration release
 sudo cp .build/x86_64-apple-macosx10.10/release/wallpapper /usr/local/bin
 ```
 
+If you are using swift in version 4.1, please edit `Package.swift` file and put there your version of swift (in first line).
+
 Now in the console you can run `wallpapper -h` and you should got a response similar to the following one.
 
 ```bash
@@ -39,6 +41,8 @@ If you have done above commands now you can build dynamic wallpaper. It's really
   {
     "fileName": "1.png",
     "isPrimary": true,
+    "isForLight": true,
+    "isForDark": false,
     "themeMode": 1,
     "altitude": 27.95,
     "azimuth": 279.66
@@ -46,6 +50,8 @@ If you have done above commands now you can build dynamic wallpaper. It's really
   {
     "fileName": "2.png",
     "isPrimary": false,
+    "isForLight": false,
+    "isForDark": false,
     "themeMode": 1,
     "altitude": -31.05,
     "azimuth": 4.16
@@ -54,6 +60,8 @@ If you have done above commands now you can build dynamic wallpaper. It's really
   {
     "fileName": "16.png",
     "isPrimary": false,
+    "isForLight": false,
+    "isForDark": true,
     "themeMode": 1,
     "altitude": -28.63,
     "azimuth": 340.41
@@ -65,7 +73,8 @@ Properties:
 
 - `fileName` - name of picture file name.
 - `isPrimary` - information about image which is primary image (it will be visible after creating `heic` file). Only one of the file can be primary.
-- `themeMode` - information about mode which will display picture. 0 - picture will be displayed in both modes (light/dark). 1 - picture will be displayed only in light mode.
+- `isForLight` - if `true` picture will be displayed when user chose "Light (static)" wallpaper
+- `isForDark` - if `true` picture will be displayed when user chose "Dark (static)" wallpaper
 - `altitude` - is the angle between the Sun and the observer's local horizon.
 - `azimuth` - that is the angle of the Sun around the horizon.
 

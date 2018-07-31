@@ -12,5 +12,4 @@ class SequenceItem : Codable {
     var a: Double = 0.0
     var z: Double = 0.0
     var i: Int = 0
-    var o: Int = 0
 }

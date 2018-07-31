@@ -11,14 +11,16 @@ import Foundation
 class PictureInfo: Decodable {
     var fileName: String
     var isPrimary = false
-    var themeMode: ThemeMode = .both
+    var isForLight = false
+    var isForDark = false
     var altitude = 0.0
     var azimuth = 0.0
 
-    init(fileName: String, isPrimary: Bool, themeMode: ThemeMode, altitude: Double, azimuth: Double) {
+    init(fileName: String, isPrimary: Bool, isForLight: Bool, isForDark: Bool, altitude: Double, azimuth: Double) {
         self.fileName = fileName
         self.isPrimary = isPrimary
-        self.themeMode = themeMode
+        self.isForLight = isForLight
+        self.isForDark = isForDark
         self.altitude = altitude
         self.azimuth = azimuth
     }

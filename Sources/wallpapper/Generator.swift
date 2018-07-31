@@ -81,8 +81,15 @@ class Generator {
             let sequenceItem = SequenceItem()
             sequenceItem.a = item.altitude
             sequenceItem.z = item.azimuth
-            sequenceItem.o = item.themeMode == .both ? 0 : 1
             sequenceItem.i = index
+
+            if item.isForLight {
+                sequenceInfo.ap.l = index
+            }
+
+            if item.isForDark {
+                sequenceInfo.ap.d = index
+            }
 
             sequenceInfo.si.append(sequenceItem)
         }
