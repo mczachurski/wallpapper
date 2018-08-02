@@ -9,4 +9,9 @@
 import Foundation
 
 class InputFileNotExistsError: Error {
+    let currentDirectory: String
+
+    init(currentDirectory: String) {
+        self.currentDirectory = currentDirectory
+    }
 }

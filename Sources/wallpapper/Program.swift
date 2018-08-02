@@ -25,7 +25,7 @@ class Program {
             let currentDirectory = FileManager.default.currentDirectoryPath
 
             guard let currentDirectoryURL = URL(string: "file://\(currentDirectory)") else {
-                throw InputFileNotExistsError()
+                throw InputFileNotExistsError(currentDirectory: currentDirectory)
             }
 
             let fileURL = currentDirectoryURL.appendingPathComponent(inputFileName)
@@ -37,7 +37,11 @@ class Program {
             let generator = Generator(picureInfos: picureInfos, outputFileName: self.outputFileName)
             try generator.run()
 
-        } catch {
+        } catch let inputError as InputFileNotExistsError {
+            self.consoleIO.writeMessage("Error: '\(inputError)'. Current directory: '\(inputError.currentDirectory)'. ")
+            return false
+        }
+        catch {
             self.consoleIO.writeMessage("Error: '\(error)'.")
             return false
         }
