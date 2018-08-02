@@ -44,7 +44,6 @@ If you have done above commands now you can build dynamic wallpaper. It's really
     "isPrimary": true,
     "isForLight": true,
     "isForDark": false,
-    "themeMode": 1,
     "altitude": 27.95,
     "azimuth": 279.66
   },
@@ -53,7 +52,6 @@ If you have done above commands now you can build dynamic wallpaper. It's really
     "isPrimary": false,
     "isForLight": false,
     "isForDark": false,
-    "themeMode": 1,
     "altitude": -31.05,
     "azimuth": 4.16
   },
@@ -63,7 +61,6 @@ If you have done above commands now you can build dynamic wallpaper. It's really
     "isPrimary": false,
     "isForLight": false,
     "isForDark": true,
-    "themeMode": 1,
     "altitude": -28.63,
     "azimuth": 340.41
   }
