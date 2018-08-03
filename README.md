@@ -10,6 +10,17 @@ This is simple console application for macOS to create dynamic wallpapers introd
 
 ## Build and install
 
+### Homebrew
+
+Open your terminal and run following commands.
+
+```bash
+brew tap mczachurski/wallpapper
+brew install wallpapper
+```
+
+### Manually
+
 Open your terminal and run following commands.
 
 ```bash
