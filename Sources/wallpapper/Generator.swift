@@ -37,9 +37,9 @@ class Generator {
                 for (index, pictureInfo) in self.picureInfos.enumerated() {
                     let fileURL = currentDirectoryURL.appendingPathComponent(pictureInfo.fileName)
 
-                    self.consoleIO.writeMessage("Reading image file: '\(fileURL)'...")
+                    self.consoleIO.writeMessage("Reading image file: '\(fileURL)'...", to: .debug)
                     let orginalImage = NSImage(contentsOf: fileURL)
-                    self.consoleIO.writeMessage("OK.\n")
+                    self.consoleIO.writeMessage("OK.\n", to: .debug)
 
                     if let cgImage = orginalImage?.CGImage {
 
@@ -59,28 +59,28 @@ class Generator {
                                 throw AddTagImageError()
                             }
 
-                            self.consoleIO.writeMessage("Adding image and metadata...")
+                            self.consoleIO.writeMessage("Adding image and metadata...", to: .debug)
                             CGImageDestinationAddImageAndMetadata(destination, cgImage, imageMetadata, self.options as CFDictionary)
-                            self.consoleIO.writeMessage("OK.\n")
+                            self.consoleIO.writeMessage("OK.\n", to: .debug)
                         } else {
-                            self.consoleIO.writeMessage("Adding image...")
+                            self.consoleIO.writeMessage("Adding image...", to: .debug)
                             CGImageDestinationAddImage(destination, cgImage, self.options as CFDictionary)
-                            self.consoleIO.writeMessage("OK.\n")
+                            self.consoleIO.writeMessage("OK.\n", to: .debug)
                         }
                     }
                 }
 
-                self.consoleIO.writeMessage("Finalizing image container...")
+                self.consoleIO.writeMessage("Finalizing image container...", to: .debug)
                 guard CGImageDestinationFinalize(destination) else {
                     throw ImageFinalizingError()
                 }
-                self.consoleIO.writeMessage("OK.\n")
+                self.consoleIO.writeMessage("OK.\n", to: .debug)
 
-                self.consoleIO.writeMessage("Saving data to file '\(self.outputFileName)'...")
+                self.consoleIO.writeMessage("Saving data to file '\(self.outputFileName)'...", to: .debug)
                 let imageData = destinationData as Data
                 let outputURL = currentDirectoryURL.appendingPathComponent(self.outputFileName)
                 try imageData.write(to: outputURL)
-                self.consoleIO.writeMessage("OK.\n")
+                self.consoleIO.writeMessage("OK.\n", to: .debug)
             }
         } else {
             throw NotSupportedSystemError()

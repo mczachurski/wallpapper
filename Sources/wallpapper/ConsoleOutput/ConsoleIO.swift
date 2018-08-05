@@ -12,6 +12,8 @@ class ConsoleIO {
     func writeMessage(_ message: String, to: OutputType = .standard) {
         switch to {
         case .standard:
+            print(message)
+        case .debug:
             fputs("\(message)", stdout)
             fflush(stdout)
         case .error:

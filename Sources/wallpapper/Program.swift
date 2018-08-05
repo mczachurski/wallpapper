@@ -30,14 +30,14 @@ class Program {
 
             let fileURL = currentDirectoryURL.appendingPathComponent(inputFileName)
 
-            self.consoleIO.writeMessage("Reading JSON file: '\(fileURL)'...")
+            self.consoleIO.writeMessage("Reading JSON file: '\(fileURL)'...", to: .debug)
             let inputFileContents = try Data(contentsOf: fileURL)
-            self.consoleIO.writeMessage("OK.\n")
+            self.consoleIO.writeMessage("OK.\n", to: .debug)
             
             let decoder = JSONDecoder()
-            self.consoleIO.writeMessage("Decoding JSON file...")
+            self.consoleIO.writeMessage("Decoding JSON file...", to: .debug)
             let picureInfos = try decoder.decode([PictureInfo].self, from: inputFileContents)
-            self.consoleIO.writeMessage("OK (\(picureInfos.count) pictures).\n")
+            self.consoleIO.writeMessage("OK (\(picureInfos.count) pictures).\n", to: .debug)
 
             let generator = Generator(picureInfos: picureInfos, outputFileName: self.outputFileName)
             try generator.run()
@@ -103,7 +103,7 @@ class Program {
     }
 
     func printVersion() {
-        self.consoleIO.writeMessage("1.2.0")
+        self.consoleIO.writeMessage("1.2.1")
     }
 
     func printUsage() {

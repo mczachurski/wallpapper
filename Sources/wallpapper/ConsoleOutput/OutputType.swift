@@ -11,4 +11,5 @@ import Foundation
 enum OutputType {
     case error
     case standard
+    case debug
 }
