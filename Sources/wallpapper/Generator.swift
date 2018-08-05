@@ -15,6 +15,7 @@ class Generator {
     var picureInfos: [PictureInfo]
     let outputFileName: String
     let options = [kCGImageDestinationLossyCompressionQuality: 1.0]
+    let consoleIO = ConsoleIO()
 
     init(picureInfos: [PictureInfo], outputFileName: String) {
         self.picureInfos = picureInfos
@@ -35,7 +36,10 @@ class Generator {
 
                 for (index, pictureInfo) in self.picureInfos.enumerated() {
                     let fileURL = currentDirectoryURL.appendingPathComponent(pictureInfo.fileName)
+
+                    self.consoleIO.writeMessage("Reading image file: '\(fileURL)'...")
                     let orginalImage = NSImage(contentsOf: fileURL)
+                    self.consoleIO.writeMessage("OK.\n")
 
                     if let cgImage = orginalImage?.CGImage {
 
@@ -55,18 +59,28 @@ class Generator {
                                 throw AddTagImageError()
                             }
 
+                            self.consoleIO.writeMessage("Adding image and metadata...")
                             CGImageDestinationAddImageAndMetadata(destination, cgImage, imageMetadata, self.options as CFDictionary)
+                            self.consoleIO.writeMessage("OK.\n")
                         } else {
+                            self.consoleIO.writeMessage("Adding image...")
                             CGImageDestinationAddImage(destination, cgImage, self.options as CFDictionary)
+                            self.consoleIO.writeMessage("OK.\n")
                         }
                     }
                 }
 
-                CGImageDestinationFinalize(destination)
-                let imageData = destinationData as Data
+                self.consoleIO.writeMessage("Finalizing image container...")
+                guard CGImageDestinationFinalize(destination) else {
+                    throw ImageFinalizingError()
+                }
+                self.consoleIO.writeMessage("OK.\n")
 
+                self.consoleIO.writeMessage("Saving data to file '\(self.outputFileName)'...")
+                let imageData = destinationData as Data
                 let outputURL = currentDirectoryURL.appendingPathComponent(self.outputFileName)
                 try imageData.write(to: outputURL)
+                self.consoleIO.writeMessage("OK.\n")
             }
         } else {
             throw NotSupportedSystemError()

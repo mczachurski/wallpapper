@@ -29,20 +29,25 @@ class Program {
             }
 
             let fileURL = currentDirectoryURL.appendingPathComponent(inputFileName)
+
+            self.consoleIO.writeMessage("Reading JSON file: '\(fileURL)'...")
             let inputFileContents = try Data(contentsOf: fileURL)
+            self.consoleIO.writeMessage("OK.\n")
             
             let decoder = JSONDecoder()
+            self.consoleIO.writeMessage("Decoding JSON file...")
             let picureInfos = try decoder.decode([PictureInfo].self, from: inputFileContents)
+            self.consoleIO.writeMessage("OK (\(picureInfos.count) pictures).\n")
 
             let generator = Generator(picureInfos: picureInfos, outputFileName: self.outputFileName)
             try generator.run()
 
         } catch let inputError as InputFileNotExistsError {
-            self.consoleIO.writeMessage("Error: '\(inputError)'. Current directory: '\(inputError.currentDirectory)'. ")
+            self.consoleIO.writeMessage("type: '\(inputError)'. Current directory: '\(inputError.currentDirectory)'. ", to: .error)
             return false
         }
         catch {
-            self.consoleIO.writeMessage("Error: '\(error)'.")
+            self.consoleIO.writeMessage("type: \(error)", to: .error)
             return false
         }
 
@@ -90,7 +95,7 @@ class Program {
         }
 
         if self.inputFileName == "" {
-            self.consoleIO.writeMessage("Unknown input file name.")
+            self.consoleIO.writeMessage("unknown input file name.", to: .error)
             return (true, false)
         }
 
@@ -98,7 +103,7 @@ class Program {
     }
 
     func printVersion() {
-        self.consoleIO.writeMessage("1.1.0")
+        self.consoleIO.writeMessage("1.2.0")
     }
 
     func printUsage() {
