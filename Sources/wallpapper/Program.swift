@@ -22,15 +22,8 @@ class Program {
         }
 
         do {
-            let currentDirectory = FileManager.default.currentDirectoryPath
-
-            guard let currentDirectoryURL = URL(string: "file://\(currentDirectory)") else {
-                throw InputFileNotExistsError(currentDirectory: currentDirectory)
-            }
-
-            let fileURL = currentDirectoryURL.appendingPathComponent(inputFileName)
-
-            self.consoleIO.writeMessage("Reading JSON file: '\(fileURL)'...", to: .debug)
+            let fileURL = try self.getPathToJsonFile()
+            self.consoleIO.writeMessage("Reading JSON file: '\(fileURL.absoluteString)'...", to: .debug)
             let inputFileContents = try Data(contentsOf: fileURL)
             self.consoleIO.writeMessage("OK.\n", to: .debug)
             
@@ -39,19 +32,20 @@ class Program {
             let picureInfos = try decoder.decode([PictureInfo].self, from: inputFileContents)
             self.consoleIO.writeMessage("OK (\(picureInfos.count) pictures).\n", to: .debug)
 
-            let generator = Generator(picureInfos: picureInfos, outputFileName: self.outputFileName)
+            let baseURL = fileURL.deletingLastPathComponent()
+            let generator = Generator(picureInfos: picureInfos, baseURL: baseURL, outputFileName: self.outputFileName)
             try generator.run()
 
-        } catch let inputError as InputFileNotExistsError {
-            self.consoleIO.writeMessage("type: '\(inputError)'. Current directory: '\(inputError.currentDirectory)'. ", to: .error)
-            return false
-        }
-        catch {
+        } catch {
             self.consoleIO.writeMessage("type: \(error)", to: .error)
             return false
         }
 
         return true
+    }
+
+    func getPathToJsonFile() throws -> URL {
+        return URL(fileURLWithPath: inputFileName)
     }
 
     func proceedCommandLineArguments() -> (Bool, Bool) {
@@ -103,7 +97,7 @@ class Program {
     }
 
     func printVersion() {
-        self.consoleIO.writeMessage("1.2.1")
+        self.consoleIO.writeMessage("1.2.2")
     }
 
     func printUsage() {

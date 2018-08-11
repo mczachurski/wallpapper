@@ -13,35 +13,38 @@ import AVFoundation
 class Generator {
 
     var picureInfos: [PictureInfo]
+    let baseURL: URL
     let outputFileName: String
     let options = [kCGImageDestinationLossyCompressionQuality: 1.0]
     let consoleIO = ConsoleIO()
 
-    init(picureInfos: [PictureInfo], outputFileName: String) {
+    init(picureInfos: [PictureInfo], baseURL: URL, outputFileName: String) {
         self.picureInfos = picureInfos
+        self.baseURL = baseURL
         self.outputFileName = outputFileName
     }
 
     func run() throws {
         if #available(OSX 10.13, *) {
             let destinationData = NSMutableData()
-            let currentDirectory = FileManager.default.currentDirectoryPath
-
-            if let currentDirectoryURL = URL(string: "file://\(currentDirectory)"),
-                let destination = CGImageDestinationCreateWithData(destinationData, AVFileType.heic as CFString, self.picureInfos.count, nil) {
+            if let destination = CGImageDestinationCreateWithData(destinationData, AVFileType.heic as CFString, self.picureInfos.count, nil) {
 
                 self.picureInfos.sort { (left, right) -> Bool in
                     return left.isPrimary == true
                 }
 
                 for (index, pictureInfo) in self.picureInfos.enumerated() {
-                    let fileURL = currentDirectoryURL.appendingPathComponent(pictureInfo.fileName)
+                    let fileURL = URL(fileURLWithPath: pictureInfo.fileName, relativeTo: self.baseURL)
 
-                    self.consoleIO.writeMessage("Reading image file: '\(fileURL)'...", to: .debug)
-                    let orginalImage = NSImage(contentsOf: fileURL)
+                    self.consoleIO.writeMessage("Reading image file: '\(fileURL.absoluteString)'...", to: .debug)
+                    guard let orginalImage = NSImage(contentsOf: fileURL) else {
+                        self.consoleIO.writeMessage("ERROR.\n", to: .debug)
+                        return
+                    }
+
                     self.consoleIO.writeMessage("OK.\n", to: .debug)
 
-                    if let cgImage = orginalImage?.CGImage {
+                    if let cgImage = orginalImage.CGImage {
 
                         if index == 0 {
                             let imageMetadata = CGImageMetadataCreateMutable()
@@ -76,9 +79,9 @@ class Generator {
                 }
                 self.consoleIO.writeMessage("OK.\n", to: .debug)
 
-                self.consoleIO.writeMessage("Saving data to file '\(self.outputFileName)'...", to: .debug)
+                let outputURL = URL(fileURLWithPath: self.outputFileName)
+                self.consoleIO.writeMessage("Saving data to file '\(outputURL.absoluteString)'...", to: .debug)
                 let imageData = destinationData as Data
-                let outputURL = currentDirectoryURL.appendingPathComponent(self.outputFileName)
                 try imageData.write(to: outputURL)
                 self.consoleIO.writeMessage("OK.\n", to: .debug)
             }
