@@ -46,6 +46,16 @@ Command options are:
 
 That's all. Now you can build your own dynamic wallpappers.
 
+### Troubleshooting
+
+If you get an error during the Swift build portion of install, try downloading the entire Xcode IDE (not just the tools) from the app store. Then run 
+
+```bash
+sudo xcode-select -s /Applications/Xcode.app/Contents/Developer 
+```
+
+and run the installation command again.
+
 ## Getting started
 
 If you have done above commands now you can build dynamic wallpaper. It's really easy. First you have to put all you pictures into one folder and in the same folder create `json` file with picture's description. `json` file have to have structure like on below snippet.
