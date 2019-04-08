@@ -10,6 +10,8 @@ This is simple console application for macOS to create dynamic wallpapers introd
 
 ## Build and install
 
+You need to have latest XCode (10.2) and Swift 5 installed.
+
 ### Homebrew
 
 Open your terminal and run following commands.
@@ -27,7 +29,7 @@ Open your terminal and run following commands.
 git clone https://github.com/mczachurski/wallpapper.git
 cd wallpapper
 swift build --configuration release
-sudo cp .build/x86_64-apple-macosx10.10/release/wallpapper /usr/local/bin
+sudo cp .build/x86_64-apple-macosx/release/wallpapper /usr/local/bin
 ```
 
 If you are using swift in version 4.1, please edit `Package.swift` file and put there your version of swift (in first line).
