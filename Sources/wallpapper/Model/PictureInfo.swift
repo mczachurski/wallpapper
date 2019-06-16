@@ -13,10 +13,10 @@ class PictureInfo: Decodable {
     var isPrimary = false
     var isForLight = false
     var isForDark = false
-    var altitude = 0.0
-    var azimuth = 0.0
+    var altitude: Double?
+    var azimuth: Double?
 
-    init(fileName: String, isPrimary: Bool, isForLight: Bool, isForDark: Bool, altitude: Double, azimuth: Double) {
+    init(fileName: String, isPrimary: Bool, isForLight: Bool, isForDark: Bool, altitude: Double?, azimuth: Double?) {
         self.fileName = fileName
         self.isPrimary = isPrimary
         self.isForLight = isForLight
