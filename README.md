@@ -58,7 +58,11 @@ and run the installation command again.
 
 ## Getting started
 
-If you have done above commands now you can build dynamic wallpaper. It's really easy. First you have to put all you pictures into one folder and in the same folder create `json` file with picture's description. `json` file have to have structure like on below snippet.
+If you have done above commands now you can build dynamic wallpaper. It's really easy. First you have to put all you pictures into one folder and in the same folder create `json` file with picture's description. Application support two kind of dynamic wallpapers. 
+
+### Solar
+
+For wallpaper which based on solar coordinates `json` file have to have structure like on below snippet.
 
 ```json
 [
@@ -100,6 +104,36 @@ Properties:
 - `azimuth` - that is the angle of the Sun around the horizon.
 
 To calculate proper altitude and azimuth you can use that page: [https://keisan.casio.com/exec/system/1224682277](https://keisan.casio.com/exec/system/1224682277). You have to put place where you take a photo and the date. Then system generate for you altitude and azimuth of the Sun during whole day.
+
+### Apperance
+
+For wallpapers based on OS apperance settings (light/dark) we have to prepare much simpler JSON file, and we have to use only two images (one for light and one for dark theme). 
+
+```json
+[
+    {
+        "fileName": "1.png",
+        "isPrimary": true,
+        "isForLight": true,
+        "isForDark": false
+    },
+    {
+        "fileName": "2.png",
+        "isPrimary": false,
+        "isForLight": false,
+        "isForDark": true
+    }
+]
+```
+
+Properties:
+
+- `fileName` - name of picture file name.
+- `isPrimary` - information about image which is primary image (it will be visible after creating `heic` file). Only one of the file can be primary.
+- `isForLight` - if `true` picture will be displayed when user uses light theme
+- `isForDark` - if `true` picture will be displayed when user uses dark theme
+
+### Preparing wallpapers
 
 When you have `json` file and all pictures then you can generate `heic` file. You have to run following command:
 
