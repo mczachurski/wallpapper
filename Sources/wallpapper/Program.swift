@@ -101,7 +101,7 @@ class Program {
     }
 
     func printVersion() {
-        self.consoleIO.writeMessage("1.3.1")
+        self.consoleIO.writeMessage("1.4.1")
     }
 
     func printUsage() {
