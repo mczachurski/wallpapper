@@ -83,6 +83,8 @@ class Generator {
 
         if sequenceInfo.si.count > 0 {
             try self.appendDesktopProperties(to: imageMetadata, withKey: "solar", value: sequenceInfo)
+        } else if sequenceInfo.ti.count > 0 {
+            try self.appendDesktopProperties(to: imageMetadata, withKey: "h24", value: sequenceInfo)
         } else {
             try self.appendDesktopProperties(to: imageMetadata, withKey: "apr", value: sequenceInfo.ap)
         }
@@ -109,11 +111,11 @@ class Generator {
 
         for (index, item) in self.picureInfos.enumerated() {
 
-            if item.isForLight {
+            if item.isForLight ?? false {
                 sequenceInfo.ap.l = index
             }
 
-            if item.isForDark {
+            if item.isForDark ?? false {
                 sequenceInfo.ap.d = index
             }
 
@@ -123,6 +125,12 @@ class Generator {
                 sequenceItem.z = azimuth
                 sequenceItem.i = index
                 sequenceInfo.si.append(sequenceItem)
+            }
+
+            if let time = item.time {
+                let timeItem = TimeItem()
+                timeItem.t = Double(Calendar.current.component(.hour, from: time)) / 24.0
+                sequenceInfo.ti.append(timeItem)
             }
         }
 

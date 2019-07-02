@@ -10,5 +10,6 @@ import Foundation
 
 class SequenceInfo : Codable {
     var si: [SequenceItem] = []
+    var ti: [TimeItem] = []
     var ap = Apperance()
 }

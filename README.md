@@ -58,7 +58,7 @@ and run the installation command again.
 
 ## Getting started
 
-If you have done above commands now you can build dynamic wallpaper. It's really easy. First you have to put all you pictures into one folder and in the same folder create `json` file with picture's description. Application support two kind of dynamic wallpapers. 
+If you have done above commands now you can build dynamic wallpaper. It's really easy. First you have to put all you pictures into one folder and in the same folder create `json` file with picture's description. Application support three kinds of dynamic wallpapers. 
 
 ### Solar
 
@@ -70,23 +70,17 @@ For wallpaper which based on solar coordinates `json` file have to have structur
     "fileName": "1.png",
     "isPrimary": true,
     "isForLight": true,
-    "isForDark": false,
     "altitude": 27.95,
     "azimuth": 279.66
   },
   {
     "fileName": "2.png",
-    "isPrimary": false,
-    "isForLight": false,
-    "isForDark": false,
     "altitude": -31.05,
     "azimuth": 4.16
   },
   ...
   {
     "fileName": "16.png",
-    "isPrimary": false,
-    "isForLight": false,
     "isForDark": true,
     "altitude": -28.63,
     "azimuth": 340.41
@@ -105,6 +99,42 @@ Properties:
 
 To calculate proper altitude and azimuth you can use that page: [https://keisan.casio.com/exec/system/1224682277](https://keisan.casio.com/exec/system/1224682277). You have to put place where you take a photo and the date. Then system generate for you altitude and azimuth of the Sun during whole day.
 
+### Time
+
+For wallpaper which based on OS time `json` file have to have structure like on below snippet.
+
+```json
+[
+    {
+        "fileName": "1.png",
+        "isPrimary": true,
+        "isForLight": true,
+        "time": "2012-04-23T10:25:43Z"
+    },
+    {
+        "fileName": "2.png",
+        "time": "2012-04-23T14:32:12Z"
+    },
+    {
+        "fileName": "3.png",
+        "time": "2012-04-23T18:12:01Z"
+    },
+    {
+        "fileName": "4.png",
+        "isForDark": true,
+        "time": "2012-04-23T20:10:45Z"
+    }
+]
+```
+
+Properties:
+
+- `fileName` - name of picture file name.
+- `isPrimary` - information about image which is primary image (it will be visible after creating `heic` file). Only one of the file can be primary.
+- `isForLight` - if `true` picture will be displayed when user chose "Light (static)" wallpaper
+- `isForDark` - if `true` picture will be displayed when user chose "Dark (static)" wallpaper
+- `time` - time when wallpaper will be changed (most important is hour).
+
 ### Apperance
 
 For wallpapers based on OS apperance settings (light/dark) we have to prepare much simpler JSON file, and we have to use only two images (one for light and one for dark theme). 
@@ -114,13 +144,10 @@ For wallpapers based on OS apperance settings (light/dark) we have to prepare mu
     {
         "fileName": "1.png",
         "isPrimary": true,
-        "isForLight": true,
-        "isForDark": false
+        "isForLight": true
     },
     {
         "fileName": "2.png",
-        "isPrimary": false,
-        "isForLight": false,
         "isForDark": true
     }
 ]
