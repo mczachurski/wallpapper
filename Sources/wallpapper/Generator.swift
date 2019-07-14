@@ -129,6 +129,7 @@ class Generator {
 
             if let time = item.time {
                 let timeItem = TimeItem()
+                timeItem.i = index
                 timeItem.t = Double(Calendar.current.component(.hour, from: time)) / 24.0
                 sequenceInfo.ti.append(timeItem)
             }
