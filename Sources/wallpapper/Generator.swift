@@ -81,9 +81,9 @@ class Generator {
         let imageMetadata = CGImageMetadataCreateMutable()
         let sequenceInfo = self.createPropertyList()
 
-        if sequenceInfo.si.count > 0 {
+        if sequenceInfo.si != nil {
             try self.appendDesktopProperties(to: imageMetadata, withKey: "solar", value: sequenceInfo)
-        } else if sequenceInfo.ti.count > 0 {
+        } else if sequenceInfo.ti != nil {
             try self.appendDesktopProperties(to: imageMetadata, withKey: "h24", value: sequenceInfo)
         } else {
             try self.appendDesktopProperties(to: imageMetadata, withKey: "apr", value: sequenceInfo.ap)
@@ -124,14 +124,25 @@ class Generator {
                 sequenceItem.a = altitude
                 sequenceItem.z = azimuth
                 sequenceItem.i = index
-                sequenceInfo.si.append(sequenceItem)
+
+                if sequenceInfo.si == nil {
+                    sequenceInfo.si = []
+                }
+
+                sequenceInfo.si?.append(sequenceItem)
             }
 
             if let time = item.time {
                 let timeItem = TimeItem()
                 timeItem.i = index
-                timeItem.t = Double(Calendar.current.component(.hour, from: time)) / 24.0
-                sequenceInfo.ti.append(timeItem)
+                let hour = Calendar.current.component(.hour, from: time)
+                timeItem.t = Double(hour) / 24.0
+
+                if sequenceInfo.ti == nil {
+                    sequenceInfo.ti = []
+                }
+
+                sequenceInfo.ti?.append(timeItem)
             }
         }
 
