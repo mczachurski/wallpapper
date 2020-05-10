@@ -9,6 +9,11 @@
 import Foundation
 
 class TimeItem : Codable {
-    var t: Double = 0.0
-    var i: Int = 0
+    enum CodingKeys: String, CodingKey {
+        case time = "t"
+        case imageIndex = "i"
+    }
+
+    var time: Double = 0.0
+    var imageIndex: Int = 0
 }

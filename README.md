@@ -1,5 +1,10 @@
 # wallpapper
 
+![Build Status](https://github.com/mczachurski/wallpapper/workflows/Build/badge.svg)
+[![Swift 5.2](https://img.shields.io/badge/Swift-5.2-orange.svg?style=flat)](ttps://developer.apple.com/swift/)
+[![Swift Package Manager](https://img.shields.io/badge/SPM-compatible-4BC51D.svg?style=flat)](https://swift.org/package-manager/)
+[![Platforms OS X | Linux](https://img.shields.io/badge/Platforms-macOS%20-lightgray.svg?style=flat)](https://developer.apple.com/swift/)
+
 ![wallpaper](Images/wallpaper.png)
 
 This is simple console application for macOS to create dynamic wallpapers introduced in macOS Mojave. [Here](https://www.youtube.com/watch?v=TVqfPzdsbzY) you can watch how dynamic wallpapers works. Also you can read more about dynamic wallpapers in following articles:
@@ -90,7 +95,7 @@ For wallpaper which based on solar coordinates `json` file have to have structur
 
 Properties:
 
-- `fileName` - name of picture file name.
+- `fileName` - name of picture file name (you can use same file for few nodes).
 - `isPrimary` - information about image which is primary image (it will be visible after creating `heic` file). Only one of the file can be primary.
 - `isForLight` - if `true` picture will be displayed when user chose "Light (static)" wallpaper
 - `isForDark` - if `true` picture will be displayed when user chose "Dark (static)" wallpaper
@@ -129,7 +134,7 @@ For wallpaper which based on OS time `json` file have to have structure like on 
 
 Properties:
 
-- `fileName` - name of picture file name.
+- `fileName` - name of picture file name (you can use same file for few nodes).
 - `isPrimary` - information about image which is primary image (it will be visible after creating `heic` file). Only one of the file can be primary.
 - `isForLight` - if `true` picture will be displayed when user chose "Light (static)" wallpaper
 - `isForDark` - if `true` picture will be displayed when user chose "Dark (static)" wallpaper

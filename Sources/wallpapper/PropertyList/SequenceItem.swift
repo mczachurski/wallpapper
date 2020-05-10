@@ -9,7 +9,13 @@
 import Foundation
 
 class SequenceItem : Codable {
-    var a: Double = 0.0
-    var z: Double = 0.0
-    var i: Int = 0
+    enum CodingKeys: String, CodingKey {
+        case altitude = "a"
+        case azimuth = "z"
+        case imageIndex = "i"
+    }
+    
+    var altitude: Double = 0.0
+    var azimuth: Double = 0.0
+    var imageIndex: Int = 0
 }

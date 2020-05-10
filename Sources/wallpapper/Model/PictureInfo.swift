@@ -8,7 +8,7 @@
 
 import Foundation
 
-class PictureInfo: Decodable {
+struct PictureInfo: Decodable {
     var fileName: String
     var isPrimary: Bool?
     var isForLight: Bool?
@@ -16,21 +16,4 @@ class PictureInfo: Decodable {
     var altitude: Double?
     var azimuth: Double?
     var time: Date?
-
-    init(fileName: String,
-         isPrimary: Bool?,
-         isForLight: Bool?,
-         isForDark: Bool?,
-         altitude: Double,
-         azimuth: Double?,
-         time: Date?
-    ) {
-        self.fileName = fileName
-        self.isPrimary = isPrimary
-        self.isForLight = isForLight
-        self.isForDark = isForDark
-        self.altitude = altitude
-        self.azimuth = azimuth
-        self.time = time 
-    }
 }

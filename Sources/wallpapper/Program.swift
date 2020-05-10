@@ -33,12 +33,12 @@ class Program {
             decoder.dateDecodingStrategy = .formatted(formatter)
 
             self.consoleIO.writeMessage("Decoding JSON file...", to: .debug)
-            let picureInfos = try decoder.decode([PictureInfo].self, from: inputFileContents)
-            self.consoleIO.writeMessage("OK (\(picureInfos.count) pictures).\n", to: .debug)
+            let pictureInfos = try decoder.decode([PictureInfo].self, from: inputFileContents)
+            self.consoleIO.writeMessage("OK (\(pictureInfos.count) pictures).\n", to: .debug)
 
             let baseURL = fileURL.deletingLastPathComponent()
-            let generator = Generator(picureInfos: picureInfos, baseURL: baseURL, outputFileName: self.outputFileName)
-            try generator.run()
+            let wallpaperGenerator = WallpaperGenerator()
+            try wallpaperGenerator.generate(pictureInfos: pictureInfos, baseURL: baseURL, outputFileName: self.outputFileName);
 
         } catch {
             self.consoleIO.writeMessage("type: \(error)", to: .error)
@@ -101,7 +101,7 @@ class Program {
     }
 
     func printVersion() {
-        self.consoleIO.writeMessage("1.4.2")
+        self.consoleIO.writeMessage("1.5.0")
     }
 
     func printUsage() {

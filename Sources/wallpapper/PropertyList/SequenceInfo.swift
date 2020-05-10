@@ -9,7 +9,13 @@
 import Foundation
 
 class SequenceInfo : Codable {
-    var si: [SequenceItem]?
-    var ti: [TimeItem]?
-    var ap = Apperance()
+    enum CodingKeys: String, CodingKey {
+        case sequenceItems = "si"
+        case timeItems = "ti"
+        case apperance = "ap"
+    }
+    
+    var sequenceItems: [SequenceItem]?
+    var timeItems: [TimeItem]?
+    var apperance = Apperance()
 }

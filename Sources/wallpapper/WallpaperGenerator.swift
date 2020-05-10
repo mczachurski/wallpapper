@@ -1,0 +1,66 @@
+//
+//  Generator.swift
+//  wallpapper
+//
+//  Created by Marcin Czachurski on 02/07/2018.
+//  Copyright © 2018 Marcin Czachurski. All rights reserved.
+//
+
+import Foundation
+import AppKit
+import AVFoundation
+
+class WallpaperGenerator {
+    public func generate(pictureInfos: [PictureInfo], baseURL: URL, outputFileName: String) throws {
+        let consoleIO = ConsoleIO()
+        let options = [kCGImageDestinationLossyCompressionQuality: 1.0]
+        
+        if #available(OSX 10.13, *) {
+            
+            let imageMetadataGenerator = ImageMetadataGenerator(pictureInfos: pictureInfos)
+            let imageMetadata = try imageMetadataGenerator.getImageMetadata()
+            let images = imageMetadataGenerator.images
+            
+            let destinationData = NSMutableData()
+            if let destination = CGImageDestinationCreateWithData(destinationData, AVFileType.heic as CFString, images.count, nil) {
+                for (index, fileName) in images.enumerated() {
+                    let fileURL = URL(fileURLWithPath: fileName, relativeTo: baseURL)
+
+                    consoleIO.writeMessage("Reading image file: '\(fileURL.absoluteString)'...", to: .debug)
+                    guard let orginalImage = NSImage(contentsOf: fileURL) else {
+                        consoleIO.writeMessage("ERROR.\n", to: .debug)
+                        return
+                    }
+
+                    consoleIO.writeMessage("OK.\n", to: .debug)
+
+                    if let cgImage = orginalImage.CGImage {
+                        if index == 0 {
+                            consoleIO.writeMessage("Adding image and metadata...", to: .debug)
+                            CGImageDestinationAddImageAndMetadata(destination, cgImage, imageMetadata, options as CFDictionary)
+                            consoleIO.writeMessage("OK.\n", to: .debug)
+                        } else {
+                            consoleIO.writeMessage("Adding image...", to: .debug)
+                            CGImageDestinationAddImage(destination, cgImage, options as CFDictionary)
+                            consoleIO.writeMessage("OK.\n", to: .debug)
+                        }
+                    }
+                }
+
+                consoleIO.writeMessage("Finalizing image container...", to: .debug)
+                guard CGImageDestinationFinalize(destination) else {
+                    throw ImageFinalizingError()
+                }
+                consoleIO.writeMessage("OK.\n", to: .debug)
+
+                let outputURL = URL(fileURLWithPath: outputFileName)
+                consoleIO.writeMessage("Saving data to file '\(outputURL.absoluteString)'...", to: .debug)
+                let imageData = destinationData as Data
+                try imageData.write(to: outputURL)
+                consoleIO.writeMessage("OK.\n", to: .debug)
+            }
+        } else {
+            throw NotSupportedSystemError()
+        }
+    }
+}
