@@ -13,6 +13,13 @@ This is simple console application for macOS to create dynamic wallpapers introd
 - [macOS Mojave dynamic wallpapers (II)](https://itnext.io/macos-mojave-dynamic-wallpapers-ii-f8b1e55c82f)
 - [macOS Mojave dynamic wallpapers (III)](https://itnext.io/macos-mojave-wallpaper-iii-c747c30935c4)
 
+## Examples
+
+Below you can download prepared dynamic wallpapers:
+
+- [Earth view](https://www.dropbox.com/s/kd2g59qswchsd0v/Earth%20View.heic?dl=0)
+- [Cyberpunk 2077](https://www.dropbox.com/s/54iupz5kmveh61j/cyberpunk-01.heic?dl=0)
+
 ## Build and install
 
 You need to have latest XCode (10.2) and Swift 5 installed.
