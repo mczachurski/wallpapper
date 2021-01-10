@@ -17,5 +17,5 @@ class SequenceInfo : Codable {
     
     var sequenceItems: [SequenceItem]?
     var timeItems: [TimeItem]?
-    var apperance = Apperance()
+    var apperance: Apperance?
 }

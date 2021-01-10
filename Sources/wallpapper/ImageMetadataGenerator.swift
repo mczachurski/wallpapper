@@ -68,12 +68,18 @@ class ImageMetadataGenerator {
 
         for (index, item) in self.pictureInfos.enumerated() {
 
+            if item.isForLight != nil || item.isForDark != nil {
+                if sequenceInfo.apperance == nil {
+                    sequenceInfo.apperance = Apperance()
+                }
+            }
+            
             if item.isForLight ?? false {
-                sequenceInfo.apperance.lightIndex = index
+                sequenceInfo.apperance?.lightIndex = index
             }
 
             if item.isForDark ?? false {
-                sequenceInfo.apperance.darkIndex = index
+                sequenceInfo.apperance?.darkIndex = index
             }
 
             if let altitude = item.altitude, let azimuth = item.azimuth {
