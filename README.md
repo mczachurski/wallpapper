@@ -17,8 +17,11 @@ This is simple console application for macOS to create dynamic wallpapers introd
 
 Below you can download prepared dynamic wallpapers:
 
-- [Earth view](https://www.dropbox.com/s/kd2g59qswchsd0v/Earth%20View.heic?dl=0)
-- [Cyberpunk 2077](https://www.dropbox.com/s/54iupz5kmveh61j/cyberpunk-01.heic?dl=0)
+- Earth view ([download](https://www.dropbox.com/s/kd2g59qswchsd0v/Earth%20View.heic?dl=0))
+![earth](Images/earth-01.gif)
+
+- Cyberpunk 2077 ([download](https://www.dropbox.com/s/54iupz5kmveh61j/cyberpunk-01.heic?dl=0))
+![cyberpunk](Images/cyberpunk-01.gif)
 
 ## Build and install
 
