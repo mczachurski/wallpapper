@@ -13,6 +13,7 @@ class Program {
     let consoleIO = ConsoleIO()
     var inputFileName = ""
     var outputFileName = "output.heic"
+    var shouldExtract = false
 
     func run() -> Bool {
 
@@ -21,8 +22,16 @@ class Program {
             return resultCode
         }
 
+        if self.shouldExtract {
+            return self.extractMetadata()
+        } else {
+            return self.generateImage()
+        }
+    }
+
+    private func generateImage() -> Bool {
         do {
-            let fileURL = try self.getPathToJsonFile()
+            let fileURL = try self.getPathToInputFile()
             self.consoleIO.writeMessage("Reading JSON file: '\(fileURL.absoluteString)'...", to: .debug)
             let inputFileContents = try Data(contentsOf: fileURL)
             self.consoleIO.writeMessage("OK.\n", to: .debug)
@@ -39,20 +48,35 @@ class Program {
             let baseURL = fileURL.deletingLastPathComponent()
             let wallpaperGenerator = WallpaperGenerator()
             try wallpaperGenerator.generate(pictureInfos: pictureInfos, baseURL: baseURL, outputFileName: self.outputFileName);
-
         } catch {
-            self.consoleIO.writeMessage("type: \(error)", to: .error)
+            self.consoleIO.writeMessage("Error occurs during picture generation: \(error)", to: .error)
             return false
         }
-
+        
         return true
     }
-
-    func getPathToJsonFile() throws -> URL {
+    
+    private func extractMetadata() -> Bool {
+        do {
+            let fileURL = try self.getPathToInputFile()
+            self.consoleIO.writeMessage("Reading HEIC file: '\(fileURL.absoluteString)'...", to: .debug)
+            let inputFileContents = try Data(contentsOf: fileURL)
+            
+            let metadataExtractor = MetadataExtractor()
+            try metadataExtractor.extract(imageData: inputFileContents)
+        } catch {
+            self.consoleIO.writeMessage("Error occurs during metadata extraction: \(error)", to: .error)
+            return false
+        }
+        
+        return true
+    }
+    
+    private func getPathToInputFile() throws -> URL {
         return URL(fileURLWithPath: inputFileName)
     }
 
-    func proceedCommandLineArguments() -> (Bool, Bool) {
+    private func proceedCommandLineArguments() -> (Bool, Bool) {
         if CommandLine.arguments.count == 1 {
             self.printUsage()
             return (true, false)
@@ -85,6 +109,15 @@ class Program {
                 }
 
                 optionIndex = outputNameOptionIndex
+            case .extract:
+                let inputNameOptionIndex = optionIndex + 1
+                if inputNameOptionIndex < CommandLine.arguments.count {
+                    self.inputFileName = CommandLine.arguments[inputNameOptionIndex]
+                }
+
+                optionIndex = inputNameOptionIndex
+                
+                self.shouldExtract = true
             default:
                 break;
             }
@@ -100,11 +133,11 @@ class Program {
         return (false, false)
     }
 
-    func printVersion() {
-        self.consoleIO.writeMessage("1.5.0")
+    private func printVersion() {
+        self.consoleIO.writeMessage("1.6.0")
     }
 
-    func printUsage() {
+    private func printUsage() {
 
         let executableName = (CommandLine.arguments[0] as NSString).lastPathComponent
 
@@ -113,6 +146,7 @@ class Program {
         self.consoleIO.writeMessage(" -h\t\t\tshow this message and exit")
         self.consoleIO.writeMessage(" -v\t\t\tshow program version and exit")
         self.consoleIO.writeMessage(" -o\t\t\toutput file name (default is 'output.heic')")
-        self.consoleIO.writeMessage(" -i\t\t\tinput file name, json file with wallpaper description")
+        self.consoleIO.writeMessage(" -i\t\t\tinput .json file with wallpaper description")
+        self.consoleIO.writeMessage(" -e\t\t\tinput .heic file to extract metadata")
     }
 }

@@ -47,7 +47,7 @@ class ImageMetadataGenerator {
                                                         "http://ns.apple.com/namespace/1.0/" as CFString,
                                                         "apple_desktop" as CFString,
                                                         nil) else {
-            throw NamespaceNotRegisteredError()
+            throw ImageMetadataGeneratorError.namespaceNotRegistered
         }
 
         let base64PropertyList = try self.createBase64PropertyList(value: value)
@@ -58,7 +58,7 @@ class ImageMetadataGenerator {
                                                         base64PropertyList as CFTypeRef)
 
         guard CGImageMetadataSetTagWithPath(imageMetadata, nil, "apple_desktop:\(key)" as CFString, imageMetadataTag!) else {
-            throw AddTagImageError()
+            throw ImageMetadataGeneratorError.addTagIntoImageFailed
         }
     }
 

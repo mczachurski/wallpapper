@@ -11,6 +11,7 @@ import AppKit
 import AVFoundation
 
 class WallpaperGenerator {
+
     public func generate(pictureInfos: [PictureInfo], baseURL: URL, outputFileName: String) throws {
         let consoleIO = ConsoleIO()
         let options = [kCGImageDestinationLossyCompressionQuality: 1.0]
@@ -49,7 +50,7 @@ class WallpaperGenerator {
 
                 consoleIO.writeMessage("Finalizing image container...", to: .debug)
                 guard CGImageDestinationFinalize(destination) else {
-                    throw ImageFinalizingError()
+                    throw ImageMetadataGeneratorError.imageNotFinalized
                 }
                 consoleIO.writeMessage("OK.\n", to: .debug)
 
@@ -60,7 +61,7 @@ class WallpaperGenerator {
                 consoleIO.writeMessage("OK.\n", to: .debug)
             }
         } else {
-            throw NotSupportedSystemError()
+            throw ImageMetadataGeneratorError.notSupportedSystem
         }
     }
 }

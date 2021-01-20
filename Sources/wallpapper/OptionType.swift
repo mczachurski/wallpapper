@@ -13,6 +13,7 @@ enum OptionType: String {
     case version = "-v"
     case input = "-i"
     case output = "-o"
+    case extract = "-e"
     case unknown
 
     init(value: String) {
@@ -21,6 +22,7 @@ enum OptionType: String {
         case "-v": self = .version
         case "-i": self = .input
         case "-o": self = .output
+        case "-e": self = .extract
         default: self = .unknown
         }
     }

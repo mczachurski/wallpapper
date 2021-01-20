@@ -54,9 +54,11 @@ Now in the console you can run `wallpapper -h` and you should got a response sim
 ```bash
 wallpapper: [command_option] -i inputFile
 Command options are:
- -h			show this message and exit
- -o			output file name (default is 'output.heic')
- -i			input file name, json file with wallpaper description
+ -h            show this message and exit
+ -v            show program version and exit
+ -o            output file name (default is 'output.heic')
+ -i            input .json file with wallpaper description
+ -e            input .heic file to extract metadata
 ```
 
 That's all. Now you can build your own dynamic wallpappers.
@@ -184,3 +186,13 @@ wallpapper -i wallpapper.json
 ```
 
 You should got a new file: `output.heic`. Set this file as a new wallpaper and enjoy you own dynamic wallpaper! 
+
+### Extracting metadata
+
+You can extract metadata from existing `heic` file. You have to run following command:
+
+```bash
+wallpapper -e Catalina.heic
+```
+
+Metadata should be printed as output on the console.
