@@ -1,4 +1,4 @@
-# wallpapper
+# wallpapper / wallpapper-exif
 
 ![Build Status](https://github.com/mczachurski/wallpapper/workflows/Build/badge.svg)
 [![Swift 5.2](https://img.shields.io/badge/Swift-5.2-orange.svg?style=flat)](ttps://developer.apple.com/swift/)
