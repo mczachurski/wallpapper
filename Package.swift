@@ -4,10 +4,14 @@ import PackageDescription
 let package = Package(
     name: "wallpapper",
     products: [
-        .executable(name: "wallpapper", targets: ["wallpapper"]),
+        .library(name: "WallpapperLib", targets: ["WallpapperLib"]),
+        .executable(name: "wallpapper", targets: ["Wallpapper"]),
+        .executable(name: "wallpapper-exif", targets: ["WallpapperExif"])
     ],
     dependencies: [],
     targets: [
-        .target(name: "wallpapper", dependencies: [])
+        .target(name: "WallpapperLib", dependencies: []),
+        .target(name: "Wallpapper", dependencies: ["WallpapperLib"]),
+        .target(name: "WallpapperExif", dependencies: ["WallpapperLib"])
     ]
 )

@@ -1,6 +1,6 @@
 //
 //  TimeItem.swift
-//  wallpapper
+//  WallpapperLib
 //
 //  Created by Marcin Czachurski on 01/07/2019.
 //  Copyright © 2019 Marcin Czachurski. All rights reserved.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-class TimeItem : Codable {
+public class TimeItem : Codable {
     enum CodingKeys: String, CodingKey {
         case time = "t"
         case imageIndex = "i"

@@ -1,6 +1,6 @@
 //
-//  Generator.swift
-//  wallpapper
+//  WallpaperGenerator.swift
+//  WallpapperLib
 //
 //  Created by Marcin Czachurski on 02/07/2018.
 //  Copyright © 2018 Marcin Czachurski. All rights reserved.
@@ -10,7 +10,10 @@ import Foundation
 import AppKit
 import AVFoundation
 
-class WallpaperGenerator {
+public class WallpaperGenerator {
+    
+    public init() {
+    }
 
     public func generate(pictureInfos: [PictureInfo], baseURL: URL, outputFileName: String) throws {
         let consoleIO = ConsoleIO()

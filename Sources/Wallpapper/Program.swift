@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import WallpapperLib
 
 class Program {
 
@@ -62,8 +63,8 @@ class Program {
             self.consoleIO.writeMessage("Reading HEIC file: '\(fileURL.absoluteString)'...", to: .debug)
             let inputFileContents = try Data(contentsOf: fileURL)
             
-            let metadataExtractor = MetadataExtractor()
-            try metadataExtractor.extract(imageData: inputFileContents)
+            let dynamicWallpaperExtractor = DynamicWallpaperExtractor()
+            try dynamicWallpaperExtractor.extract(imageData: inputFileContents)
         } catch {
             self.consoleIO.writeMessage("Error occurs during metadata extraction: \(error)", to: .error)
             return false
@@ -134,7 +135,7 @@ class Program {
     }
 
     private func printVersion() {
-        self.consoleIO.writeMessage("1.6.0")
+        self.consoleIO.writeMessage("1.7.0")
     }
 
     private func printUsage() {

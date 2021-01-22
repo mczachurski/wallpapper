@@ -1,6 +1,6 @@
 //
 //  SequenceItem.swift
-//  wallpapper
+//  WallpapperLib
 //
 //  Created by Marcin Czachurski on 03/07/2018.
 //  Copyright © 2018 Marcin Czachurski. All rights reserved.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-class SequenceItem : Codable {
+public class SequenceItem : Codable {
     enum CodingKeys: String, CodingKey {
         case altitude = "a"
         case azimuth = "z"

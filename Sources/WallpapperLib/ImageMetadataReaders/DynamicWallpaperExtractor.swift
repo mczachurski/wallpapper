@@ -1,8 +1,8 @@
 //
-//  MetadataExtractor.swift
-//  wallpapper
+//  DynamicWallpaperExtractor.swift
+//  WallpapperLib
 //
-//  Created by Marcin Czachurski on 20/01/2021.
+//  Created by Marcin Czachurski on 21/10/2021.
 //  Copyright © 2021 Marcin Czachurski. All rights reserved.
 //
 
@@ -10,8 +10,11 @@ import Foundation
 import AppKit
 import AVFoundation
 
-class MetadataExtractor {
-
+public class DynamicWallpaperExtractor {
+    
+    public init() {
+    }
+    
     public func extract(imageData: Data) throws {
         let imageSource = CGImageSourceCreateWithData(imageData as CFData, nil)
         guard let imageSourceValue = imageSource else {

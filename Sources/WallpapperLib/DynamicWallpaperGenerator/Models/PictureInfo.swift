@@ -1,6 +1,6 @@
 //
 //  PictureInfo.swift
-//  wallpapper
+//  WallpapperLib
 //
 //  Created by Marcin Czachurski on 02/07/2018.
 //  Copyright © 2018 Marcin Czachurski. All rights reserved.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct PictureInfo: Decodable {
+public struct PictureInfo: Decodable {
     var fileName: String
     var isPrimary: Bool?
     var isForLight: Bool?

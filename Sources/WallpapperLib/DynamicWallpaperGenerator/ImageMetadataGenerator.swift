@@ -1,6 +1,6 @@
 //
-//  ImageMetadata.swift
-//  wallpapper
+//  ImageMetadataGenerator.swift
+//  WallpapperLib
 //
 //  Created by Marcin Czachurski on 10/05/2020.
 //  Copyright © 2020 Marcin Czachurski. All rights reserved.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-class ImageMetadataGenerator {
+public class ImageMetadataGenerator {
     private let pictureInfos: [PictureInfo]
     
     public lazy var images: [String] = {
