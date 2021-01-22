@@ -44,7 +44,7 @@ Open your terminal and run following commands.
 git clone https://github.com/mczachurski/wallpapper.git
 cd wallpapper
 swift build --configuration release
-sudo cp .build/x86_64-apple-macosx/release/wallpapper /usr/local/bin
+sudo cp .build/release/wallpapper /usr/local/bin
 ```
 
 If you are using swift in version 4.1, please edit `Package.swift` file and put there your version of swift (in first line).
@@ -115,6 +115,14 @@ Properties:
 - `azimuth` - that is the angle of the Sun around the horizon.
 
 To calculate proper altitude and azimuth you can use that page: [https://keisan.casio.com/exec/system/1224682277](https://keisan.casio.com/exec/system/1224682277). You have to put place where you take a photo and the date. Then system generate for you altitude and azimuth of the Sun during whole day.
+
+If your photos contains GPS Exif metadata and creation time you can use `wallpapper-exif` application which generate `JSON` file with Sun `altitude` and `azimuth`. Example application usage:
+
+```bash
+$ wallpapper-exif 1.jpeg 2.jpeg 3.jpeg
+```
+
+`JSON` should be produced as output in the console.
 
 ### Time
 
