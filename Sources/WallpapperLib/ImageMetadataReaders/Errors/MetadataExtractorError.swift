@@ -8,7 +8,16 @@
 
 import Foundation
 
-public enum MetadataExtractorError: Error {
+public enum MetadataExtractorError: WallpapperError {
     case imageSourceNotCreated
     case imageMetadataNotCreated
+    
+    public var message: String {
+        switch self {
+        case .imageSourceNotCreated:
+            return "CGImageSource object cannot be created."
+        case .imageMetadataNotCreated:
+            return "CGImageMetadata object cannot be created."
+        }
+    }
 }

@@ -14,42 +14,61 @@ class Program {
     var inputFileNames: [String] = []
     var wallpapperItems: [WallpapperItem] = []
     
-    func run() throws -> Bool {
+    func run() -> Bool {
         
         let (shouldBreak, resultCode) = self.proceedCommandLineArguments()
         if shouldBreak {
             return resultCode
         }
         
-        for inputFileName in inputFileNames {
-            let fileURL = try getPathToInputFile(inputFileName: inputFileName)
-            let inputFileContents = try Data(contentsOf: fileURL)
+        return self.generateSunPositions()
+    }
+    
+    private func generateSunPositions() -> Bool {
+        do {
+            for inputFileName in inputFileNames {
+                let fileURL = try getPathToInputFile(inputFileName: inputFileName)
+                self.consoleIO.writeMessage("Reading file: '\(fileURL.absoluteString)'...", to: .debug)
+                let inputFileContents = try Data(contentsOf: fileURL)
+                self.consoleIO.writeMessage("OK.\n", to: .debug)
 
-            let locationExtractor = LocationExtractor()
-            let imageLocation = try locationExtractor.extract(imageData: inputFileContents)
+                self.consoleIO.writeMessage("Extracting Exif information...", to: .debug)
+                let locationExtractor = LocationExtractor()
+                let imageLocation = try locationExtractor.extract(imageData: inputFileContents)
+                self.consoleIO.writeMessage("OK.\n", to: .debug)
 
-            let sc = SunCalculations(date: imageLocation.createDate,
-                                     latitude: imageLocation.latitude,
-                                     longitude: imageLocation.longitude)
+                self.consoleIO.writeMessage("Calculating Sun position...", to: .debug)
+                let sunCalculations = SunCalculations(imageLocation: imageLocation)
+                let position = sunCalculations.getSunPosition()
+                self.consoleIO.writeMessage("OK.\n", to: .debug)
 
-            let position = sc.getSunPosition()
+                let wallpapperItem = WallpapperItem(fileName: inputFileName, altitude: position.altitude, azimuth: position.azimuth)
+                wallpapperItems.append(wallpapperItem)
+            }
 
-            let wallpapperItem = WallpapperItem(fileName: inputFileName,
-                                                altitude: position.altitude,
-                                                azimuth: position.azimuth)
-
-            wallpapperItems.append(wallpapperItem)
+            return try self.printJsonString(wallpapperItems: wallpapperItems)
+        } catch (let error as WallpapperError) {
+            self.consoleIO.writeMessage("Unexpected error occurs: \(error.message)", to: .error)
+            return false
+        } catch {
+            self.consoleIO.writeMessage("Unexpected error occurs: \(error)", to: .error)
+            return false
         }
-
+    }
+    
+    private func printJsonString(wallpapperItems: [WallpapperItem]) throws -> Bool {
         let encoder = JSONEncoder()
         encoder.outputFormatting = .prettyPrinted
+
         let jsonData = try encoder.encode(wallpapperItems)
         let jsonOptionslString = String(bytes: jsonData, encoding: .utf8)
         
         guard let jsonString = jsonOptionslString else {
+            self.consoleIO.writeMessage("Error during converting object into string", to: .error)
             return false
         }
         
+        self.consoleIO.writeMessage("Output:", to: .standard)
         self.consoleIO.writeMessage(jsonString, to: .standard)
         return true
     }
@@ -95,7 +114,7 @@ class Program {
     }
     
     private func printVersion() {
-        self.consoleIO.writeMessage("1.0.0")
+        self.consoleIO.writeMessage("1.7.1")
     }
     
     private func printUsage() {

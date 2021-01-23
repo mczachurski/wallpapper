@@ -26,15 +26,19 @@ public class LocationExtractor {
             throw MetadataExtractorError.imageMetadataNotCreated
         }
         
+        var latRaw: String?
         var lat: Double?
+        
+        var lngRaw: String?
         var lng: Double?
+        
+        var datRaw: String?
         var dat: Date?
         
         CGImageMetadataEnumerateTagsUsingBlock(imageMetadataValue, nil, nil) { (value, metadataTag) -> Bool in
 
             let valueString = value as String
             let tag = CGImageMetadataTagCopyValue(metadataTag)
-            // print("Metadata key: '\(valueString)' - '\(tag)'")
             
             switch valueString {
             case "exif:GPSLatitude":
@@ -42,6 +46,7 @@ public class LocationExtractor {
                     return false
                 }
                 
+                latRaw = valueTag
                 lat = self.toDecimaDegrees(value: valueTag)
                 break
             case "exif:GPSLongitude":
@@ -49,6 +54,7 @@ public class LocationExtractor {
                     return false
                 }
 
+                lngRaw = valueTag
                 lng = self.toDecimaDegrees(value: valueTag)
                 break
             case "xmp:CreateDate":
@@ -56,9 +62,8 @@ public class LocationExtractor {
                     return false
                 }
                 
-                let dateFormatter = DateFormatter()
-                dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS"
-                dat = dateFormatter.date(from: valueTag)
+                datRaw = valueTag
+                dat = self.toDate(value: valueTag)
                 break
             default:
                 break
@@ -66,20 +71,38 @@ public class LocationExtractor {
             
             return true
         }
-        
-        guard let latitude = lat else {
+
+        guard latRaw != nil else {
             throw ExifExtractorError.missingLatitude
         }
         
-        guard let longitude = lng else {
+        guard lngRaw != nil else {
             throw ExifExtractorError.missingLongitude
         }
 
-        guard let createDate = dat else {
+        guard datRaw != nil else {
             throw ExifExtractorError.missingCreationDate
         }
         
+        guard let latitude = lat else {
+            throw ExifExtractorError.notSupportedLatitude(latitude: latRaw)
+        }
+        
+        guard let longitude = lng else {
+            throw ExifExtractorError.notSupportedLongitude(longitiude: lngRaw)
+        }
+
+        guard let createDate = dat else {
+            throw ExifExtractorError.notSupportedCreationDate(date: datRaw)
+        }
+        
         return ImageLocation(latitude: latitude, longitude: longitude, createDate: createDate)
+    }
+    
+    func toDate(value: String) -> Date? {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS"
+        return dateFormatter.date(from: value)
     }
     
     func toDecimaDegrees(value: String) -> Double? {

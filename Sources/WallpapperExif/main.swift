@@ -9,6 +9,6 @@
 import Foundation
 
 let program = Program()
-let result = try program.run()
+let result = program.run()
 
 exit(result ? EXIT_SUCCESS : EXIT_FAILURE)

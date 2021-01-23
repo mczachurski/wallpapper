@@ -2,6 +2,8 @@
 //  SunCalculations.swift
 //  WallpapperLib
 //
+//  Code created based on library: https://github.com/mourner/suncalc
+
 //  Created by Marcin Czachurski on 21/10/2021.
 //  Copyright © 2021 Marcin Czachurski. All rights reserved.
 //
@@ -10,9 +12,7 @@ import Foundation
 
 public class SunCalculations {
     
-    private let date: Date
-    private let latitude: Double
-    private let longitude: Double
+    private let imageLocation: ImageLocation
 
     private let rad = Double.pi / 180.0
     private let daySec = 60 * 60 * 24.0
@@ -22,16 +22,14 @@ public class SunCalculations {
     // obliquity of the Earth
     private let e = (Double.pi / 180.0) * 23.4397
     
-    public init(date: Date, latitude: Double, longitude: Double) {
-        self.date = date
-        self.latitude = latitude
-        self.longitude = longitude
+    public init(imageLocation: ImageLocation) {
+        self.imageLocation = imageLocation
     }
     
     public func getSunPosition() -> SunPosition {
-        let lw = self.rad * (-self.longitude)
-        let phi = self.rad * self.latitude
-        let days = self.toDays(date: self.date)
+        let lw = self.rad * (-self.imageLocation.longitude)
+        let phi = self.rad * self.imageLocation.latitude
+        let days = self.toDays(date: self.imageLocation.createDate)
         
         let c = self.sunCoords(days: days);
         let h = self.siderealTime(days, lw) - c.rightAscension

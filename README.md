@@ -45,6 +45,7 @@ git clone https://github.com/mczachurski/wallpapper.git
 cd wallpapper
 swift build --configuration release
 sudo cp .build/release/wallpapper /usr/local/bin
+sudo cp .build/release/wallpapper-exif /usr/local/bin
 ```
 
 If you are using swift in version 4.1, please edit `Package.swift` file and put there your version of swift (in first line).
@@ -52,7 +53,7 @@ If you are using swift in version 4.1, please edit `Package.swift` file and put 
 Now in the console you can run `wallpapper -h` and you should got a response similar to the following one.
 
 ```bash
-wallpapper: [command_option] -i inputFile
+wallpapper: [command_option] [-i jsonFile] [-e heicFile]
 Command options are:
  -h            show this message and exit
  -v            show program version and exit
@@ -114,15 +115,7 @@ Properties:
 - `altitude` - is the angle between the Sun and the observer's local horizon.
 - `azimuth` - that is the angle of the Sun around the horizon.
 
-To calculate proper altitude and azimuth you can use that page: [https://keisan.casio.com/exec/system/1224682277](https://keisan.casio.com/exec/system/1224682277). You have to put place where you take a photo and the date. Then system generate for you altitude and azimuth of the Sun during whole day.
-
-If your photos contains GPS Exif metadata and creation time you can use `wallpapper-exif` application which generate `JSON` file with Sun `altitude` and `azimuth`. Example application usage:
-
-```bash
-$ wallpapper-exif 1.jpeg 2.jpeg 3.jpeg
-```
-
-`JSON` should be produced as output in the console.
+To calculate proper altitude and azimuth you can use `wallpapper-exif` application or web page: [https://keisan.casio.com/exec/system/1224682277](https://keisan.casio.com/exec/system/1224682277). In web page you have to put place where you take a photo and the date. Then system generate for you altitude and azimuth of the Sun during whole day.
 
 ### Time
 
@@ -204,3 +197,15 @@ wallpapper -e Catalina.heic
 ```
 
 Metadata should be printed as output on the console.
+
+### Calculating sun position
+
+If your photos contains GPS Exif metadata and creation time you can use `wallpapper-exif` application to generate `json` file with Sun `altitude` and `azimuth`. Example application usage:
+
+```bash
+$ wallpapper-exif 1.jpeg 2.jpeg 3.jpeg
+```
+
+`json` should be produced as output on the console.
+
+Sun calculations has been created based on the [JavaScript library](https://github.com/mourner/suncalc) created by [Vladimir Agafonkin](http://agafonkin.com/en) ([@mourner](https://github.com/mourner)).

@@ -49,8 +49,11 @@ class Program {
             let baseURL = fileURL.deletingLastPathComponent()
             let wallpaperGenerator = WallpaperGenerator()
             try wallpaperGenerator.generate(pictureInfos: pictureInfos, baseURL: baseURL, outputFileName: self.outputFileName);
+        } catch (let error as WallpapperError) {
+            self.consoleIO.writeMessage("Unexpected error occurs: \(error.message)", to: .error)
+            return false
         } catch {
-            self.consoleIO.writeMessage("Error occurs during picture generation: \(error)", to: .error)
+            self.consoleIO.writeMessage("Unexpected error occurs: \(error)", to: .error)
             return false
         }
         
@@ -135,14 +138,14 @@ class Program {
     }
 
     private func printVersion() {
-        self.consoleIO.writeMessage("1.7.0")
+        self.consoleIO.writeMessage("1.7.1")
     }
 
     private func printUsage() {
 
         let executableName = (CommandLine.arguments[0] as NSString).lastPathComponent
 
-        self.consoleIO.writeMessage("\(executableName): [command_option] -i inputFile")
+        self.consoleIO.writeMessage("\(executableName): [command_option] [-i jsonFile] [-e heicFile]")
         self.consoleIO.writeMessage("Command options are:")
         self.consoleIO.writeMessage(" -h\t\t\tshow this message and exit")
         self.consoleIO.writeMessage(" -v\t\t\tshow program version and exit")

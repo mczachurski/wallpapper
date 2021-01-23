@@ -8,9 +8,22 @@
 
 import Foundation
 
-public enum ImageMetadataGeneratorError: Error {
+public enum ImageMetadataGeneratorError: WallpapperError {
     case addTagIntoImageFailed
     case imageNotFinalized
     case namespaceNotRegistered
     case notSupportedSystem
+    
+    public var message: String {
+        switch self {
+        case .addTagIntoImageFailed:
+            return "Add tag into image failed."
+        case .imageNotFinalized:
+            return "Image has not be finilized."
+        case .namespaceNotRegistered:
+            return "Namespave cannot be registered."
+        case .notSupportedSystem:
+            return "Not supported operating system."
+        }
+    }
 }
