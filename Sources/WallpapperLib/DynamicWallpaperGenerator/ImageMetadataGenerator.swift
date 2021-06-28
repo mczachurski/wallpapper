@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import ImageIO
 
 public class ImageMetadataGenerator {
     private let pictureInfos: [PictureInfo]
