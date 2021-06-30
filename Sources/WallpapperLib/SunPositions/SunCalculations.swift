@@ -1,11 +1,8 @@
 //
-//  SunCalculations.swift
-//  WallpapperLib
-//
+//  https://mczachurski.dev
 //  Code created based on library: https://github.com/mourner/suncalc
-
-//  Created by Marcin Czachurski on 21/10/2021.
-//  Copyright © 2021 Marcin Czachurski. All rights reserved.
+//  Copyright © 2021 Marcin Czachurski and the repository contributors.
+//  Licensed under the MIT License.
 //
 
 import Foundation

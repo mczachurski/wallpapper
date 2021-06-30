@@ -1,11 +1,8 @@
 //
-//  MetadataExtractorError.swift
-//  WallpapperLib
+//  https://mczachurski.dev
+//  Copyright © 2021 Marcin Czachurski and the repository contributors.
+//  Licensed under the MIT License.
 //
-//  Created by Marcin Czachurski on 21/10/2021.
-//  Copyright © 2021 Marcin Czachurski. All rights reserved.
-//
-
 import Foundation
 
 public enum MetadataExtractorError: WallpapperError {

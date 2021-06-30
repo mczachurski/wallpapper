@@ -1,9 +1,7 @@
 //
-//  Apperance.swift
-//  WallpapperLib
-//
-//  Created by Marcin Czachurski on 31/07/2018.
-//  Copyright © 2018 Marcin Czachurski. All rights reserved.
+//  https://mczachurski.dev
+//  Copyright © 2021 Marcin Czachurski and the repository contributors.
+//  Licensed under the MIT License.
 //
 
 import Foundation

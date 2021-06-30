@@ -1,9 +1,7 @@
 //
-//  ImageMetadataGenerator.swift
-//  WallpapperLib
-//
-//  Created by Marcin Czachurski on 10/05/2020.
-//  Copyright © 2020 Marcin Czachurski. All rights reserved.
+//  https://mczachurski.dev
+//  Copyright © 2021 Marcin Czachurski and the repository contributors.
+//  Licensed under the MIT License.
 //
 
 import Foundation
