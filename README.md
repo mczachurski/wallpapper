@@ -41,14 +41,24 @@ brew install wallpapper
 Open your terminal and run following commands.
 
 ```bash
-git clone https://github.com/mczachurski/wallpapper.git
-cd wallpapper
-swift build --configuration release
-sudo cp .build/release/wallpapper /usr/local/bin
-sudo cp .build/release/wallpapper-exif /usr/local/bin
+$ git clone https://github.com/mczachurski/wallpapper.git
+$ cd wallpapper
+$ swift build --configuration release
+$ sudo cp .build/release/wallpapper /usr/local/bin
+$ sudo cp .build/release/wallpapper-exif /usr/local/bin
 ```
 
 If you are using swift in version 4.1, please edit `Package.swift` file and put there your version of swift (in first line).
+
+Also you can build using `build.sh` script (it uses `swiftc` instead Swift CLI).
+
+```bash
+$ git clone https://github.com/mczachurski/wallpapper.git
+$ cd wallpapper
+$ ./build.sh
+$ sudo cp .output/wallpapper /usr/local/bin
+$ sudo cp .output/wallpapper-exif /usr/local/bin
+```
 
 Now in the console you can run `wallpapper -h` and you should got a response similar to the following one.
 

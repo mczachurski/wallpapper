@@ -53,6 +53,7 @@ Temporary Items
 ## Build generated
 build/
 DerivedData/
+output/
 
 ## Various settings
 *.pbxuser
