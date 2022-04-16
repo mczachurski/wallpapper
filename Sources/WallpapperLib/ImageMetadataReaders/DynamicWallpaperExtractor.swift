@@ -43,6 +43,9 @@ public class DynamicWallpaperExtractor {
                     return true
                 }
                 
+                let callPath = URL(string: FileManager.default.currentDirectoryPath)
+                decodedData.write(toFile: callPath.appendingPathComponent("output.plist"))
+                
                 let decoder = PropertyListDecoder()
                 guard let sequenceInfo = try? decoder.decode(SequenceInfo.self, from: decodedData) else {
                     print("\tError during convert tag into object")
