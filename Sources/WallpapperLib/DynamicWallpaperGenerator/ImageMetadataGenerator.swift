@@ -19,7 +19,7 @@ public class ImageMetadataGenerator {
             pictureInfo.fileName
         }
         var addedDict = [String: Bool]()
-        return sortedFileNames.filter { addedDict.updateValue(true, forKey: $0) == nil }
+        return sortedFileNames
     }()
     
     init(pictureInfos: [PictureInfo]) {
@@ -85,7 +85,7 @@ public class ImageMetadataGenerator {
                 let sequenceItem = SequenceItem()
                 sequenceItem.altitude = altitude
                 sequenceItem.azimuth = azimuth
-                sequenceItem.imageIndex = self.getImageIndex(fileName: item.fileName)
+                sequenceItem.imageIndex = index
 
                 if sequenceInfo.sequenceItems == nil {
                     sequenceInfo.sequenceItems = []
@@ -96,7 +96,7 @@ public class ImageMetadataGenerator {
 
             if let time = item.time {
                 let timeItem = TimeItem()
-                timeItem.imageIndex = self.getImageIndex(fileName: item.fileName)
+                timeItem.imageIndex = index
                 let hour = Calendar.current.component(.hour, from: time)
                 timeItem.time = Double(hour) / 24.0
 
@@ -119,9 +119,5 @@ public class ImageMetadataGenerator {
 
         let base64PropertyList = plistData.base64EncodedString()
         return base64PropertyList
-    }
-    
-    private func getImageIndex(fileName: String) -> Int {
-        return self.images.firstIndex(of: fileName) ?? 0
     }
 }
