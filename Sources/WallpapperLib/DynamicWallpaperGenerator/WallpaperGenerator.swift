@@ -26,7 +26,8 @@ public class WallpaperGenerator {
             let destinationData = NSMutableData()
             if let destination = CGImageDestinationCreateWithData(destinationData, AVFileType.heic as CFString, images.count, nil) {
                 for (index, fileName) in images.enumerated() {
-                    let fileURL = URL(fileURLWithPath: fileName, relativeTo: baseURL)
+                    let callPath = URL(string: FileManager.default.currentDirectoryPath)
+                    let fileURL = URL(fileURLWithPath: fileName, relativeTo: callPath)
 
                     consoleIO.writeMessage("Reading image file: '\(fileURL.absoluteString)'...", to: .debug)
                     guard let orginalImage = NSImage(contentsOf: fileURL) else {
