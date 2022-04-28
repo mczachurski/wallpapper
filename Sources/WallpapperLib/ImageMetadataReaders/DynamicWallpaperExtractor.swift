@@ -43,8 +43,15 @@ public class DynamicWallpaperExtractor {
                     return true
                 }
                 
-                let callPath = URL(string: FileManager.default.currentDirectoryPath)
-                decodedData.write(toFile: callPath.appendingPathComponent("output.plist"))
+                let callPath = URL(fileURLWithPath: FileManager.default.currentDirectoryPath)
+                let plistFile = callPath.appendingPathComponent("output.plist")
+                do {
+                    try decodedData.write(to: plistFile)
+                    print("\tSaved plist file: \(plistFile)")
+                }
+                catch {
+                    print("\tError during writing plist file: \(plistFile)")
+                }
                 
                 let decoder = PropertyListDecoder()
                 guard let sequenceInfo = try? decoder.decode(SequenceInfo.self, from: decodedData) else {
