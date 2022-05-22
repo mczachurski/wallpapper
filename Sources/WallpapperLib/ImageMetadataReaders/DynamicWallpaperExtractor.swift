@@ -9,11 +9,12 @@ import AppKit
 import AVFoundation
 
 public class DynamicWallpaperExtractor {
-    
+    let consoleIO = ConsoleIO()
+
     public init() {
     }
     
-    public func extract(imageData: Data) throws {
+    public func extract(imageData: Data, outputFileName: String?) throws {
         let imageSource = CGImageSourceCreateWithData(imageData as CFData, nil)
         guard let imageSourceValue = imageSource else {
             throw MetadataExtractorError.imageSourceNotCreated
@@ -27,67 +28,87 @@ public class DynamicWallpaperExtractor {
         CGImageMetadataEnumerateTagsUsingBlock(imageMetadataValue, nil, nil) { (value, metadataTag) -> Bool in
 
             let valueString = value as String
-            print("---------------------------------------------------")
-            print("Metadata key: \(valueString)")
+            self.consoleIO.writeMessage("---------------------------------------------------")
+            self.consoleIO.writeMessage("Metadata key: \(valueString)")
             
             let tag = CGImageMetadataTagCopyValue(metadataTag)
             
             guard let valueTag = tag as? String else {
-                print("\tError during convert tag into string")
+                self.consoleIO.writeMessage("\tError during convert tag into string")
                 return true
             }
             
             if valueString.starts(with: "apple_desktop:solar") || valueString.starts(with: "apple_desktop:h24") {
                 guard let decodedData = Data(base64Encoded: valueTag) else {
-                    print("\tError during convert tag into binary data")
+                    self.consoleIO.writeMessage("\tError during convert tag into binary data")
                     return true
+                }
+                
+                if let outputFileName = outputFileName {
+                    self.saveImage(decodedData: decodedData, outputFileName: outputFileName)
                 }
                 
                 let decoder = PropertyListDecoder()
                 guard let sequenceInfo = try? decoder.decode(SequenceInfo.self, from: decodedData) else {
-                    print("\tError during convert tag into object")
+                    self.consoleIO.writeMessage("\tError during convert tag into object")
                     return true
                 }
                 
                 if let apperance = sequenceInfo.apperance {
-                    print("[APPERANCE]")
-                    print("\timage index: \(apperance.darkIndex), dark")
-                    print("\timage index: \(apperance.lightIndex), light")
+                    self.consoleIO.writeMessage("[APPERANCE]")
+                    self.consoleIO.writeMessage("\timage index: \(apperance.darkIndex), dark")
+                    self.consoleIO.writeMessage("\timage index: \(apperance.lightIndex), light")
                 }
                 
                 if let solarItems = sequenceInfo.sequenceItems {
-                    print("[SOLAR]")
+                    self.consoleIO.writeMessage("[SOLAR]")
                     for solarItem in solarItems {
-                        print("\timage index: \(solarItem.imageIndex), azimuth: \(solarItem.azimuth), altitude: \(solarItem.altitude)")
+                        self.consoleIO.writeMessage("\timage index: \(solarItem.imageIndex), azimuth: \(solarItem.azimuth), altitude: \(solarItem.altitude)")
                     }
                 }
                 
                 if let timeItems = sequenceInfo.timeItems {
-                    print("[TIME]")
+                    self.consoleIO.writeMessage("[TIME]")
                     for timeItem in timeItems {
-                        print("\timage index: \(timeItem.imageIndex), time: \(timeItem.time)")
+                        self.consoleIO.writeMessage("\timage index: \(timeItem.imageIndex), time: \(timeItem.time)")
                     }
                 }
             } else if valueString.starts(with: "apple_desktop:apr") {
                 guard let decodedData = Data(base64Encoded: valueTag) else {
-                    print("\tError during convert tag into binary data")
+                    self.consoleIO.writeMessage("\tError during convert tag into binary data")
                     return false
+                }
+                
+                if let outputFileName = outputFileName {
+                    self.saveImage(decodedData: decodedData, outputFileName: outputFileName)
                 }
                 
                 let decoder = PropertyListDecoder()
                 guard let apperance = try? decoder.decode(Apperance.self, from: decodedData) else {
-                    print("\tError during convert tag into object")
+                    self.consoleIO.writeMessage("\tError during convert tag into object")
                     return false
                 }
                 
-                print("[APPERANCE]")
-                print("\timage index: \(apperance.darkIndex), dark")
-                print("\timage index: \(apperance.lightIndex), light")
+                self.consoleIO.writeMessage("[APPERANCE]")
+                self.consoleIO.writeMessage("\timage index: \(apperance.darkIndex), dark")
+                self.consoleIO.writeMessage("\timage index: \(apperance.lightIndex), light")
             } else {
-                print("\tvalue: \(valueTag)")
+                self.consoleIO.writeMessage("\tvalue: \(valueTag)")
             }
             
             return true
+        }
+    }
+    
+    private func saveImage(decodedData: Data, outputFileName:  String) {
+        let path = URL(fileURLWithPath: FileManager.default.currentDirectoryPath)
+        let plistFile = path.appendingPathComponent(outputFileName)
+        do {
+            try decodedData.write(to: plistFile)
+            self.consoleIO.writeMessage("\tSaved plist file: \(plistFile)")
+        }
+        catch {
+            self.consoleIO.writeMessage("\tError during writing plist file: \(plistFile)")
         }
     }
 }
