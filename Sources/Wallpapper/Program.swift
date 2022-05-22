@@ -11,7 +11,7 @@ class Program {
 
     let consoleIO = ConsoleIO()
     var inputFileName = ""
-    var outputFileName = "output.heic"
+    var outputFileName: String? = nil
     var shouldExtract = false
 
     func run() -> Bool {
@@ -46,7 +46,8 @@ class Program {
 
             let baseURL = fileURL.deletingLastPathComponent()
             let wallpaperGenerator = WallpaperGenerator()
-            try wallpaperGenerator.generate(pictureInfos: pictureInfos, baseURL: baseURL, outputFileName: self.outputFileName);
+            let fileName = self.outputFileName ?? "output.heic"
+            try wallpaperGenerator.generate(pictureInfos: pictureInfos, baseURL: baseURL, outputFileName: fileName);
         } catch (let error as WallpapperError) {
             self.consoleIO.writeMessage("Unexpected error occurs: \(error.message)", to: .error)
             return false
@@ -65,7 +66,7 @@ class Program {
             let inputFileContents = try Data(contentsOf: fileURL)
             
             let dynamicWallpaperExtractor = DynamicWallpaperExtractor()
-            try dynamicWallpaperExtractor.extract(imageData: inputFileContents)
+            try dynamicWallpaperExtractor.extract(imageData: inputFileContents, outputFileName: self.outputFileName)
         } catch {
             self.consoleIO.writeMessage("Error occurs during metadata extraction: \(error)", to: .error)
             return false

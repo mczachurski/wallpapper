@@ -208,6 +208,12 @@ wallpapper -e Catalina.heic
 
 Metadata should be printed as output on the console.
 
+Also it's possible to extract and save whole `plist` file:
+
+```bash
+wallpapper -e Catalina.heic -o output.plist
+```
+
 ### Calculating sun position
 
 If your photos contains GPS Exif metadata and creation time you can use `wallpapper-exif` application to generate `json` file with Sun `altitude` and `azimuth`. Example application usage:
