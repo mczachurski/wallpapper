@@ -1,13 +1,20 @@
 name: Build
 
-on: push
+on:
+  push:
 
 jobs:
   build:
-
     runs-on: macos-latest
 
     steps:
     - uses: actions/checkout@master
     - name: Build
-      run: swift build
+      run: swift build --configuration release --arch arm64 --arch x86_64
+
+    - uses: actions/upload-artifact@v3
+      with:
+        name: wallpaper
+        path: |
+          .build/apple/Products/Release/wallpapper
+          .build/apple/Products/Release/wallpapper-exif
