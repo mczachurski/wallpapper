@@ -98,7 +98,8 @@ public class ImageMetadataGenerator {
                 let timeItem = TimeItem()
                 timeItem.imageIndex = self.getImageIndex(fileName: item.fileName)
                 let hour = Calendar.current.component(.hour, from: time)
-                timeItem.time = Double(hour) / 24.0
+                let min = Calendar.current.component(.minute, from: time)
+                timeItem.time = (Double(hour) / 24.0) + (Double(min) / 60.0 / 24.0)
 
                 if sequenceInfo.timeItems == nil {
                     sequenceInfo.timeItems = []
