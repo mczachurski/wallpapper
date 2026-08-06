@@ -7,7 +7,7 @@
 
 ![wallpaper](Images/wallpaper.png)
 
-This is simple console application for macOS to create dynamic wallpapers introduced in macOS Mojave. [Here](https://www.youtube.com/watch?v=TVqfPzdsbzY) you can watch how dynamic wallpapers works. Also you can read more about dynamic wallpapers in following articles:
+This is a simple console application for macOS to create the dynamic wallpapers introduced in macOS Mojave. [Here](https://www.youtube.com/watch?v=TVqfPzdsbzY) you can watch how dynamic wallpapers work. Also, you can read more about dynamic wallpapers in the following articles:
 
 - [macOS Mojave dynamic wallpaper](https://itnext.io/macos-mojave-dynamic-wallpaper-fd26b0698223)
 - [macOS Mojave dynamic wallpapers (II)](https://itnext.io/macos-mojave-dynamic-wallpapers-ii-f8b1e55c82f)
@@ -25,11 +25,11 @@ Below you can download prepared dynamic wallpapers:
 
 ## Build and install
 
-You need to have latest XCode (10.2) and Swift 5 installed.
+You need to have the latest Xcode (10.2) and Swift 5 installed.
 
 ### Homebrew
 
-Open your terminal and run following commands.
+Open your terminal and run the following commands.
 
 ```bash
 brew tap mczachurski/wallpapper
@@ -38,7 +38,7 @@ brew install wallpapper
 
 ### Manually
 
-Open your terminal and run following commands.
+Open your terminal and run the following commands.
 
 ```bash
 $ git clone https://github.com/mczachurski/wallpapper.git
@@ -48,9 +48,9 @@ $ sudo cp .build/release/wallpapper /usr/local/bin
 $ sudo cp .build/release/wallpapper-exif /usr/local/bin
 ```
 
-If you are using swift in version 4.1, please edit `Package.swift` file and put there your version of swift (in first line).
+If you are using Swift version 4.1, please edit the `Package.swift` file and put your version of Swift (on the first line).
 
-Also you can build using `build.sh` script (it uses `swiftc` instead Swift CLI).
+Also, you can build using the `build.sh` script (it uses `swiftc` instead of the Swift CLI).
 
 ```bash
 $ git clone https://github.com/mczachurski/wallpapper.git
@@ -60,7 +60,7 @@ $ sudo cp .output/wallpapper /usr/local/bin
 $ sudo cp .output/wallpapper-exif /usr/local/bin
 ```
 
-Now in the console you can run `wallpapper -h` and you should got a response similar to the following one.
+Now in the console you can run `wallpapper -h` and you should get a response similar to the following one.
 
 ```bash
 wallpapper: [command_option] [-i jsonFile] [-e heicFile]
@@ -72,11 +72,11 @@ Command options are:
  -e            input .heic file to extract metadata
 ```
 
-That's all. Now you can build your own dynamic wallpappers.
+That's all. Now you can build your own dynamic wallpapers.
 
 ### Troubleshooting
 
-If you get an error during the Swift build portion of install, try downloading the entire Xcode IDE (not just the tools) from the app store. Then run 
+If you get an error during the Swift build portion of the install, try downloading the entire Xcode IDE (not just the tools) from the App Store. Then run 
 
 ```bash
 sudo xcode-select -s /Applications/Xcode.app/Contents/Developer 
@@ -86,11 +86,11 @@ and run the installation command again.
 
 ## Getting started
 
-If you have done above commands now you can build dynamic wallpaper. It's really easy. First you have to put all you pictures into one folder and in the same folder create `json` file with picture's description. Application support three kinds of dynamic wallpapers. 
+If you have done the above commands, now you can build a dynamic wallpaper. It's really easy. First, you have to put all your pictures into one folder and, in the same folder, create a `json` file with the pictures' descriptions. The application supports three kinds of dynamic wallpapers. 
 
 ### Solar
 
-For wallpaper which based on solar coordinates `json` file have to have structure like on below snippet.
+For a wallpaper that is based on solar coordinates, the `json` file has to have a structure like the snippet below.
 
 ```json
 [
@@ -118,18 +118,18 @@ For wallpaper which based on solar coordinates `json` file have to have structur
 
 Properties:
 
-- `fileName` - name of picture file name (you can use same file for few nodes).
-- `isPrimary` - information about image which is primary image (it will be visible after creating `heic` file). Only one of the file can be primary.
-- `isForLight` - if `true` picture will be displayed when user chose "Light (static)" wallpaper
-- `isForDark` - if `true` picture will be displayed when user chose "Dark (static)" wallpaper
+- `fileName` - name of the picture file (you can use the same file for a few nodes).
+- `isPrimary` - information about the image that is the primary image (it will be visible after creating the `heic` file). Only one of the files can be primary.
+- `isForLight` - if `true`, the picture will be displayed when the user chooses "Light (static)" wallpaper
+- `isForDark` - if `true`, the picture will be displayed when the user chooses "Dark (static)" wallpaper
 - `altitude` - is the angle between the Sun and the observer's local horizon.
 - `azimuth` - that is the angle of the Sun around the horizon.
 
-To calculate proper altitude and azimuth you can use `wallpapper-exif` application or web page: [https://keisan.casio.com/exec/system/1224682277](https://keisan.casio.com/exec/system/1224682277). In web page you have to put place where you take a photo and the date. Then system generate for you altitude and azimuth of the Sun during whole day.
+To calculate proper altitude and azimuth, you can use the `wallpapper-exif` application or a web page: [https://gml.noaa.gov/grad/solcalc/azel.html](https://gml.noaa.gov/grad/solcalc/azel.html) or [https://www.omnicalculator.com/physics/sun-angle](https://www.omnicalculator.com/physics/sun-angle). On the web page, you have to enter the place where you take a photo and the date. Then the system generates for you the altitude and azimuth of the Sun during the whole day.
 
 ### Time
 
-For wallpaper which based on OS time `json` file have to have structure like on below snippet.
+For a wallpaper that is based on the OS time `json` file have to have a structure like the snippet below.
 
 ```json
 [
@@ -157,15 +157,15 @@ For wallpaper which based on OS time `json` file have to have structure like on 
 
 Properties:
 
-- `fileName` - name of picture file name (you can use same file for few nodes).
-- `isPrimary` - information about image which is primary image (it will be visible after creating `heic` file). Only one of the file can be primary.
-- `isForLight` - if `true` picture will be displayed when user chose "Light (static)" wallpaper
-- `isForDark` - if `true` picture will be displayed when user chose "Dark (static)" wallpaper
+- `fileName` - name of picture file (you can use the same file for a few nodes).
+- `isPrimary` - information about the image that is the primary image (it will be visible after creating the `heic` file). Only one of the files can be primary.
+- `isForLight` - if `true`, the picture will be displayed when the user chooses "Light (static)" wallpaper
+- `isForDark` - if `true`, the picture will be displayed when the user chooses "Dark (static)" wallpaper
 - `time` - time when wallpaper will be changed (most important is hour).
 
-### Apperance
+### Appearance
 
-For wallpapers based on OS apperance settings (light/dark) we have to prepare much simpler JSON file, and we have to use only two images (one for light and one for dark theme). 
+For wallpapers based on OS appearance settings (light/dark), we have to prepare a much simpler JSON file, and we have to use only two images (one for light and one for dark theme). 
 
 ```json
 [
@@ -183,24 +183,24 @@ For wallpapers based on OS apperance settings (light/dark) we have to prepare mu
 
 Properties:
 
-- `fileName` - name of picture file name.
-- `isPrimary` - information about image which is primary image (it will be visible after creating `heic` file). Only one of the file can be primary.
-- `isForLight` - if `true` picture will be displayed when user uses light theme
-- `isForDark` - if `true` picture will be displayed when user uses dark theme
+- `fileName` - name of the picture file.
+- `isPrimary` - information about the image that is the primary image (it will be visible after creating the `heic` file). Only one of the files can be primary.
+- `isForLight` - if `true`, the picture will be displayed when the user uses the light theme
+- `isForDark` - if `true`, the picture will be displayed when the user uses the dark theme
 
 ### Preparing wallpapers
 
-When you have `json` file and all pictures then you can generate `heic` file. You have to run following command:
+When you have a `json` file and all pictures, then you can generate a `heic` file. You have to run the following command:
 
 ```bash
 wallpapper -i wallpapper.json
 ```
 
-You should got a new file: `output.heic`. Set this file as a new wallpaper and enjoy you own dynamic wallpaper! 
+You should get a new file: `output.heic`. Set this file as a new wallpaper and enjoy your own dynamic wallpaper! 
 
 ### Extracting metadata
 
-You can extract metadata from existing `heic` file. You have to run following command:
+You can extract metadata from an existing `heic` file. You have to run the following command:
 
 ```bash
 wallpapper -e Catalina.heic
@@ -208,7 +208,7 @@ wallpapper -e Catalina.heic
 
 Metadata should be printed as output on the console.
 
-Also it's possible to extract and save whole `plist` file:
+Also, it's possible to extract and save the whole `plist` file:
 
 ```bash
 wallpapper -e Catalina.heic -o output.plist
@@ -216,7 +216,7 @@ wallpapper -e Catalina.heic -o output.plist
 
 ### Calculating sun position
 
-If your photos contains GPS Exif metadata and creation time you can use `wallpapper-exif` application to generate `json` file with Sun `altitude` and `azimuth`. Example application usage:
+If your photos contain GPS Exif metadata and creation time, you can use the `wallpapper-exif` application to generate a `json` file with Sun `altitude` and `azimuth`. Example application usage:
 
 ```bash
 $ wallpapper-exif 1.jpeg 2.jpeg 3.jpeg
@@ -224,4 +224,4 @@ $ wallpapper-exif 1.jpeg 2.jpeg 3.jpeg
 
 `json` should be produced as output on the console.
 
-Sun calculations has been created based on the [JavaScript library](https://github.com/mourner/suncalc) created by [Vladimir Agafonkin](http://agafonkin.com/en) ([@mourner](https://github.com/mourner)).
+Sun calculations have been created based on the [JavaScript library](https://github.com/mourner/suncalc) created by [Vladimir Agafonkin](http://agafonkin.com/en) ([@mourner](https://github.com/mourner)).
