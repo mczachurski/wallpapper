@@ -13,6 +13,7 @@ class Program {
     var inputFileName = ""
     var outputFileName: String? = nil
     var shouldExtract = false
+    var quality: Double = 1.0
 
     func run() -> Bool {
 
@@ -88,7 +89,7 @@ class Program {
             let baseURL = fileURL.deletingLastPathComponent()
             let wallpaperGenerator = WallpaperGenerator()
             let fileName = self.outputFileName ?? "output.heic"
-            try wallpaperGenerator.generate(pictureInfos: pictureInfos, baseURL: baseURL, outputFileName: fileName);
+            try wallpaperGenerator.generate(pictureInfos: pictureInfos, baseURL: baseURL, outputFileName: fileName, quality: self.quality);
         } catch (let error as WallpapperError) {
             self.consoleIO.writeMessage("Unexpected error occurs: \(error.message)", to: .error)
             return false
@@ -162,6 +163,18 @@ class Program {
                 optionIndex = inputNameOptionIndex
                 
                 self.shouldExtract = true
+            case .quality:
+                let inputNameOptionIndex = optionIndex + 1
+                if inputNameOptionIndex < CommandLine.arguments.count {
+                    if let value = Double(CommandLine.arguments[inputNameOptionIndex]) {
+                        quality = value
+                    } else {
+                        self.consoleIO.writeMessage("invalid quality number", to: .error)
+                        return (true, false)
+                    }
+                }
+
+                optionIndex = inputNameOptionIndex
             default:
                 break;
             }
@@ -192,5 +205,6 @@ class Program {
         self.consoleIO.writeMessage(" -o\t\t\toutput file name (default is 'output.heic')")
         self.consoleIO.writeMessage(" -i\t\t\tinput .json file with wallpaper description")
         self.consoleIO.writeMessage(" -e\t\t\tinput .heic file to extract metadata")
+        self.consoleIO.writeMessage(" -q\t\t\tquality (default = 1.0)")
     }
 }

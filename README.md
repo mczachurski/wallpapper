@@ -70,6 +70,7 @@ Command options are:
  -o            output file name (default is 'output.heic')
  -i            input .json file with wallpaper description
  -e            input .heic file to extract metadata
+ -q            quality of the output images (default is 1.0)
 ```
 
 That's all. Now you can build your own dynamic wallpapers.
