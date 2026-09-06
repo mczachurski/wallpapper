@@ -13,9 +13,9 @@ public class WallpaperGenerator {
     public init() {
     }
 
-    public func generate(pictureInfos: [PictureInfo], baseURL: URL, outputFileName: String) throws {
+    public func generate(pictureInfos: [PictureInfo], baseURL: URL, outputFileName: String, quality: Double) throws {
         let consoleIO = ConsoleIO()
-        let options = [kCGImageDestinationLossyCompressionQuality: 1.0]
+        let options = [kCGImageDestinationLossyCompressionQuality: quality]
         
         if #available(OSX 10.13, *) {
             

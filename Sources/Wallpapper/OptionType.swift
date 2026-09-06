@@ -12,6 +12,7 @@ enum OptionType: String {
     case input = "-i"
     case output = "-o"
     case extract = "-e"
+    case quality = "-q"
     case unknown
 
     init(value: String) {
@@ -21,6 +22,7 @@ enum OptionType: String {
         case "-i": self = .input
         case "-o": self = .output
         case "-e": self = .extract
+        case "-q": self = .quality
         default: self = .unknown
         }
     }
